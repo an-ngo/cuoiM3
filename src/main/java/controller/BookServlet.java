@@ -131,11 +131,29 @@ public class BookServlet extends HttpServlet {
             case "showAllCard":
                 showAllCard(request, response);
                 break;
+            case "showAllCardNotReturn":
+                showAllCardNotReturn(request, response);
+                break;
             default:
                 showAllBook(request, response);
 
         }
 
+    }
+
+    private void showAllCardNotReturn(HttpServletRequest request, HttpServletResponse response) {
+        List<Card> listCard = cardDAO.findAll();
+
+        request.setAttribute("listCard", listCard);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("showAllCardNotReturn.jsp");
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createCard(HttpServletRequest request, HttpServletResponse response) {
