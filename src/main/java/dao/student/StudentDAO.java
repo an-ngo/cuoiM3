@@ -1,15 +1,12 @@
 package dao.student;
 
-import model.Book;
 import model.Student;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDAO implements IStudentDAO{
     public static final String FIND_ALL = "select * from kiemtra.student";
-    public static final String FIND_STUDENT_BY_ID = "select * from kiemtra.student where student.idStudent = ?;";
     final String FIND_BY_ID = "select * from kiemtra.student where idStudent = ?;";
 
 

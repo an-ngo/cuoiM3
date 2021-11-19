@@ -1,8 +1,6 @@
 package dao.card;
 
-import model.Book;
 import model.Card;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.List;
 public class CardDAO implements ICardDAO{
     final String ADD_CARD = "insert into kiemtra.card(idBook, idStudent, status, borrowDate, returnDate) VALUE (?,?,?,?,?);";
     final String FIND_ALL = "select * from kiemtra.card";
-    final String FIND_BOOK_BY_ID = "select * from kiemtra.book where book.idBook = ?;";
     final String DELETE_BY_ID = "delete from kiemtra.card where idCard = ?";
     final String RETURN_BOOK = "update kiemtra.card set status = 1 where idCard =?";
 
@@ -65,7 +62,7 @@ public class CardDAO implements ICardDAO{
             ps.setString(5, card.getReturnDate());
 
 
-            int test = ps.executeUpdate();
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

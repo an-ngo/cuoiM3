@@ -8,13 +8,11 @@ import dao.student.IStudentDAO;
 import dao.student.StudentDAO;
 import model.Book;
 import model.Card;
-import model.Student;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "BookServlet", value = "/books")
@@ -40,9 +38,6 @@ public class BookServlet extends HttpServlet {
             case "returnBook":
                 returnBook(request,response);
                 break;
-//            case "search":
-//                searchProduct(request,response);
-//                break;
             default:
                 showAllBook(request, response);
 
@@ -55,15 +50,7 @@ public class BookServlet extends HttpServlet {
         if(check){
             showAllCard(request,response);
         }else{
-            request.setAttribute("message","khong the tra");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("noBookAlert.jsp");
-            try {
-                dispatcher.forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            popOutError("khong the tra",request,response);
         }
 
     }
@@ -76,9 +63,7 @@ public class BookServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("showAllCard.jsp");
         try {
             requestDispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -93,22 +78,12 @@ public class BookServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("showCardForm.jsp");
             try {
                 dispatcher.forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
         }
         else {
-            request.setAttribute("message","Sach nay da het");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("noBookAlert.jsp");
-            try {
-                dispatcher.forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            popOutError("Sach nay da het",request,response);
         }
 
     }
@@ -149,9 +124,7 @@ public class BookServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("showAllCardNotReturn.jsp");
         try {
             requestDispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -168,15 +141,7 @@ public class BookServlet extends HttpServlet {
             cardDAO.add(card);
             showAllBook(request,response);
         }else{
-            request.setAttribute("message","Khong The Muon Sach");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("noBookAlert.jsp");
-            try {
-                dispatcher.forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            popOutError("Khong The Muon Sach",request,response);
         }
     }
 
@@ -187,9 +152,18 @@ public class BookServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("showAllBook.jsp");
         try {
             requestDispatcher.forward(request, response);
-        } catch (ServletException e) {
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+    }
+
+
+    private void popOutError(String message,HttpServletRequest request, HttpServletResponse response){
+        request.setAttribute("message",message);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("noBookAlert.jsp");
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
